@@ -21,14 +21,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RestClientConfig {
 
-    @Value("${inventoery.service.url")
+    @Value("${inventory.service.url}")
     private String inventoryServiceUrl;
-    private final ObservationRegistry obsevationRegistry;
+    private final ObservationRegistry observationRegistry;
 
     @Bean
     public InventoryClient inventoryClient() {
 	RestClient restClient = RestClient.builder().baseUrl(inventoryServiceUrl)
-		.requestFactory(getClientRequestFactory()).observationRegistry(obsevationRegistry).build();
+		.requestFactory(getClientRequestFactory()).observationRegistry(observationRegistry).build();
 
 	var restClientAdapter = RestClientAdapter.create(restClient);
 	var httpServiceProxyFactory = HttpServiceProxyFactory.builderFor(restClientAdapter).build();
