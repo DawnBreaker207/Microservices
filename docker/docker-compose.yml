@@ -1,0 +1,36 @@
+version: '4'
+
+services:
+
+
+  frontend:
+    extends:
+      file: ../client/docker-compose.yml
+      service: frontend
+
+
+  api-gateway:
+    extends:
+     file: ../server/api-gateway/docker-compose.yml
+     service: api-gateway
+
+
+  product-service:
+   extends:
+    file: ../server/product-service/docker-compose.yml
+    service: product-service
+
+
+  inventory-service:
+   extends:
+    file: ../server/inventory-service/docker-compose.yml
+    service: inventory-service
+
+
+  order-service:
+    extends:
+     file: ../server/order-service/docker-compose.yml
+     service: order-service
+  
+
+
