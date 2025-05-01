@@ -7,8 +7,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
-import com.dawn.microservice.notification.order.OrderPlacedEvent;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +18,7 @@ public class NotificationService {
     private final JavaMailSender javaMailSender;
 
     @KafkaListener(topics = "order-placed")
-    public void listen(OrderPlacedEvent orderPlacedEvent) {
+    public void listen(com.dawn.microservice.order.event.OrderPLacedEvent orderPlacedEvent) {
 	log.info("Got Message from order-placed topic {}", orderPlacedEvent);
 	MimeMessagePreparator messagePerparator = mimeMessage -> {
 	    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
