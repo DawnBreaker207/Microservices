@@ -1,5 +1,6 @@
 package com.dawn.microservice.order.service;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.springframework.kafka.core.KafkaTemplate;
@@ -31,7 +32,7 @@ public class OrderService {
 //	Map OrderRequest to order object
 	    Order order = new Order();
 	    order.setOrderNumber(UUID.randomUUID().toString());
-	    order.setPrice(orderRequest.price());
+	    order.setPrice(orderRequest.price().multiply(BigDecimal.valueOf(orderRequest.quantity())));
 	    order.setSkuCode(orderRequest.skuCode());
 	    order.setQuantity(orderRequest.quantity());
 //	Save order to OrderRepository
