@@ -15,13 +15,20 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class SecurityConfig {
 
-    private final String[] freeResourceUrls = { "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
-	    "/swagger-resources/**", "/api-docs/**", "/aggregate/**", "/actuator/prometheus" };
+    private final String[] freeResourceUrls = { 
+	    "/swagger-ui.html", 
+	    "/swagger-ui/**", 
+	    "/v3/api-docs/**",
+	    "/swagger-resources/**",
+	    "/api-docs/**", 
+	    "/aggregate/**", 
+	    "/actuator/prometheus" };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecutiry) throws Exception {
 	return httpSecutiry.authorizeHttpRequests(
 		authorize -> authorize.requestMatchers(freeResourceUrls).permitAll().anyRequest().authenticated())
+		.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 		.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())).build();
     }
 
