@@ -18,7 +18,7 @@ public class NotificationService {
     private final JavaMailSender javaMailSender;
 
     @KafkaListener(topics = "order-placed")
-    public void listen(com.dawn.microservice.order.event.OrderPLacedEvent orderPlacedEvent) {
+    public void listen(com.dawn.microservice.order.event.OrderPlacedEvent orderPlacedEvent) {
 	log.info("Got Message from order-placed topic {}", orderPlacedEvent);
 	MimeMessagePreparator messagePerparator = mimeMessage -> {
 	    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
@@ -34,9 +34,9 @@ public class NotificationService {
 	    	Best Regards
 
 	    	Spring Shop
-	    	""", null));
+	    	""", orderPlacedEvent.getOrderNumber(), orderPlacedEvent.getLastName().toString(),
+		    orderPlacedEvent.getOrderNumber()));
 
-	    orderPlacedEvent.getOrderNumber();
 	};
 
 	try {

@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "OrderPLacedEvent",
+  "name": "OrderPlacedEvent",
   "namespace": "com.dawn.microservice.order.event",
   "fields": [
     { "name": "orderNumber", "type": "string" },
