@@ -44,8 +44,8 @@ orderProduct(product:Product, quantity: string){
   this.oidcSecurityService.userData$.subscribe(result =>{
     const userDetails = {
       email: result.userData.email,
-      firstName: result.userData.firstName,
-      lastName: result.userData.lastName
+      firstName: result.userData.given_name,
+      lastName: result.userData.family_name
     };
 
     if(!quantity){
@@ -54,7 +54,7 @@ orderProduct(product:Product, quantity: string){
       this.quantityIsNull = true;
     }else{
       const order: Order = {
-        skuCode: product.skuCode,
+        skuCode: product?.name as string,
         price: product.price,
         quantity: Number(quantity),
         userDetails: userDetails
