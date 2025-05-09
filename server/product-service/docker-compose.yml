@@ -1,0 +1,23 @@
+version: '4'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  springboot-app:
+    image: product-service:latest
+    build:
+      context: .
+    working_dir: /app
+    ports:
+      - '8888:8888'
+    depends_on:
+      - mysql
