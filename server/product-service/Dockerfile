@@ -11,5 +11,5 @@ WORKDIR /app
 
 COPY --from=builder /app/target/product-service-0.0.1-SNAPSHOT.jar /app/
 
-EXPOSE 8888
+EXPOSE 8080
 ENTRYPOINT [ "java","-jar","product-service-0.0.1-SNAPSHOT.jar" ]
