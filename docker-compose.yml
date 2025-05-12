@@ -1,6 +1,11 @@
 version: '4'
 
+networks:
+  micro_net:
+    driver: bridge
+
 services:
+  # Database
   mongodb:
     container_name: mongodb
     image: mongo:7.0.5
@@ -9,21 +14,119 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: product-service
+      MONGO_INITDB_DATABASE: microservice
     volumes:
       - ./data/mongodb:/data/db
+    networks:
+      - micro_net
 
   mysql:
     container_name: mysql
-    image: mysql:8.3.0
+    image: mysql:8.4.5
     ports:
       - '3307:3306'
     environment:
+      MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_DATABASE: microservice
+
     volumes:
       - ./data/mysql:/var/lib/mysql
-      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      # - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - micro_net
+  # Discovery Service
+  discovery-service:
+    container_name: discovery-service
+    image: discovery-service:latest
+    build:
+      context: ./server/discovery-service
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - '8761:8761'
+    networks:
+      - micro_net
 
+  # API Gateway
+  api-gateway-service:
+    container_name: api-gateway-service
+    image: api-gateway:latest
+    build:
+      context: ./server/api-gateway
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - '9000:9000'
+    depends_on:
+      - discovery-service
+    networks:
+      - micro_net
+
+  # Product Service
+  product-service:
+    container_name: product-service
+    image: product-service:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/microservice
+    build:
+      context: ./server/product-service
+      dockerfile: Dockerfile
+    working_dir: /app
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - discovery-service
+      - mysql
+      # - mongodb
+    networks:
+      - micro_net
+
+  # Order Service
+  order-service:
+    container_name: order-service
+    image: order-service:latest
+    build:
+      context: ./server/order-service
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - '8081:8081'
+    depends_on:
+      - discovery-service
+      - mysql
+
+  # Inventory Service
+  inventory-service:
+    container_name: inventory-service
+    image: inventory-service:latest
+    build:
+      context: ./server/inventory-service
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - '8082:8082'
+    depends_on:
+      - discovery-service
+      - mysql
+
+  # # Notification Service
+  notification-service:
+    container_name: notification-service
+    image: notification-service:latest
+    build:
+      context: ./server/notification-service
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - '8083:8083'
+    depends_on:
+      - discovery-service
+      - mysql
+
+  # Config Kafka
   zookeeper:
     container_name: zookeeper
     image: confluentinc/cp-zookeeper:7.5.0
@@ -56,7 +159,7 @@ services:
     depends_on:
       - broker
     ports:
-      - '8085:8081'
+      - '8085:8085'
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
@@ -66,7 +169,7 @@ services:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
     ports:
-      - '8086:8080'
+      - '8086:8086'
     depends_on:
       - broker
       - schema-registry
@@ -76,6 +179,7 @@ services:
       # KAFKA_CLUSTERS_SCHEMAREGISTRY: http://schema-registry:8081
       DYNAMIC_CONFIG_ENABLED: 'true'
 
+  # Setup Keycloak
   keycloak-mysql:
     container_name: keycloak_mysql
     image: mysql:8
@@ -102,16 +206,21 @@ services:
     ports:
       - '8181:8080'
     volumes:
-      - ./docker/keycloak/realms/:/opt/keycloak/data/import/
+      - ./keycloak/realms/:/opt/keycloak/data/import/
     depends_on:
       - keycloak-mysql
+    networks:
+      - micro_net
 
+  # Monitoring
   loki:
     container_name: loki
     image: grafana/loki:main
     command: ['-config.file=/etc/loki/local-config.yaml']
     ports:
       - '3100:3100'
+    networks:
+      - micro_net
 
   prometheus:
     container_name: prometheus
@@ -123,6 +232,8 @@ services:
       - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
       - '9090:9090'
+    networks:
+      - micro_net
 
   tempo:
     container_name: tempo
@@ -134,6 +245,8 @@ services:
     ports:
       - '3110:3100' # Tempo
       - '9411:9411' # zipkin
+    networks:
+      - micro_net
 
   grafana:
     container_name: grafana
@@ -146,3 +259,5 @@ services:
       - GF_AUTH_DISABLE_LOGIN_FORM=true
     ports:
       - '3000:3000'
+    networks:
+      - micro_net
