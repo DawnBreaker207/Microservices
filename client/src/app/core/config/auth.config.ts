@@ -1,7 +1,7 @@
-import { PassedInitialConfig } from "angular-auth-oidc-client";
+import { PassedInitialConfig } from 'angular-auth-oidc-client';
 
-export const authConfig:PassedInitialConfig = {
-  config : {
+export const authConfig: PassedInitialConfig = {
+  config: {
     authority: 'http://localhost:8181/realms/spring-microservice-security-realms',
     redirectUrl: window.location.origin,
     postLogoutRedirectUri: window.location.origin,
@@ -11,5 +11,5 @@ export const authConfig:PassedInitialConfig = {
     silentRenew: true,
     useRefreshToken: true,
     renewTimeBeforeTokenExpiresInSeconds: 30,
-  }
-}
+  },
+};
