@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import { MenuItem } from '@/app/shared/models/menu.model';
 
 export class Menu {
@@ -7,13 +8,32 @@ export class Menu {
       separator: false,
       items: [
         {
-          icon: 'assets/icons/heroicons/outline/chart-pie.svg',
+          // icon: 'assets/icons/heroicons/outline/chart-pie.svg',
+          icon: 'dashboard',
           label: 'Dashboard',
-          route: '/dashboard',
-          children: [{ label: 'Nfts', route: '/dashboard/nfts' }],
+          route: '/admin/dashboard',
         },
         {
-          icon: 'assets/icons/heroicons/outline/lock-closed.svg',
+          // icon: 'assets/icons/heroicons/outline/cube.svg',
+          icon: 'apps',
+          label: 'Products',
+          route: '/admin/product',
+        },
+        {
+          // icon: 'assets/icons/heroicons/outline/cube.svg',
+          icon: 'category',
+          label: 'Category',
+          route: '/admin/category',
+        },
+        {
+          // icon: 'assets/icons/heroicons/outline/cube.svg',
+          icon: 'account_circle',
+          label: 'User',
+          route: '/admin/user',
+        },
+        {
+          // icon: 'assets/icons/heroicons/outline/lock-closed.svg',
+          icon: 'lock',
           label: 'Auth',
           route: '/auth',
           children: [
@@ -25,19 +45,14 @@ export class Menu {
           ],
         },
         {
-          icon: 'assets/icons/heroicons/outline/exclamation-triangle.svg',
+          // icon: 'assets/icons/heroicons/outline/exclamation-triangle.svg',
+          icon: 'error',
           label: 'Errors',
           route: '/errors',
           children: [
             { label: '404', route: '/errors/404' },
             { label: '500', route: '/errors/500' },
           ],
-        },
-        {
-          icon: 'assets/icons/heroicons/outline/cube.svg',
-          label: 'Components',
-          route: '/components',
-          children: [{ label: 'Table', route: '/components/table' }],
         },
       ],
     },
@@ -46,17 +61,20 @@ export class Menu {
       separator: true,
       items: [
         {
-          icon: 'assets/icons/heroicons/outline/download.svg',
+          // icon: 'assets/icons/heroicons/outline/download.svg',
+          icon: 'download',
           label: 'Download',
           route: '/download',
         },
         {
-          icon: 'assets/icons/heroicons/outline/gift.svg',
+          // icon: 'assets/icons/heroicons/outline/gift.svg',
+          icon: 'redeem',
           label: 'Gift Card',
           route: '/gift',
         },
         {
-          icon: 'assets/icons/heroicons/outline/users.svg',
+          // icon: 'assets/icons/heroicons/outline/users.svg',
+          icon: 'person',
           label: 'Users',
           route: '/users',
         },
@@ -67,17 +85,20 @@ export class Menu {
       separator: false,
       items: [
         {
-          icon: 'assets/icons/heroicons/outline/cog.svg',
+          // icon: 'assets/icons/heroicons/outline/cog.svg',
+          icon: 'settings',
           label: 'Settings',
           route: '/settings',
         },
         {
-          icon: 'assets/icons/heroicons/outline/bell.svg',
+          // icon: 'assets/icons/heroicons/outline/bell.svg',
+          icon: 'notifications',
           label: 'Notifications',
           route: '/gift',
         },
         {
-          icon: 'assets/icons/heroicons/outline/folder.svg',
+          // icon: 'assets/icons/heroicons/outline/folder.svg',
+          icon: 'folder',
           label: 'Folders',
           route: '/folders',
           children: [
