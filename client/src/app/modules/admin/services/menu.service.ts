@@ -11,7 +11,7 @@ import { Menu } from '@/app/core/constants/menu';
 })
 export class MenuService implements OnDestroy {
   private _showSidebar = signal(true);
-  private _showMobileMenu = signal(true);
+  private _showMobileMenu = signal(false);
   private _pagesMenu = signal<MenuItem[]>([]);
   private _subscription = new Subscription();
 
