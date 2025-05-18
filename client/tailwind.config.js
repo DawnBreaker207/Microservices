@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 const plugin = require('tailwindcss/plugin');
 module.exports = {
+  darkMode: 'media',
   content: ['./src/**/*.{html,ts}'],
-  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
