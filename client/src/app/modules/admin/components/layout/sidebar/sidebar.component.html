@@ -20,10 +20,10 @@
         (click)="toggleSidebar()"
         class="text-muted-foreground/50 hover:text-muted-foreground flex items-center justify-center rounded-md p-2 transition-all duration-200 focus:outline-hidden"
         [ngClass]="{ 'rotate-180': !menuService.showSideBar }">
-        <svg-icon src="assets/icons/heroicons/solid/chevron-double-left.svg"></svg-icon>
+        <!-- <svg-icon src="assets/icons/heroicons/solid/chevron-double-left.svg"></svg-icon> -->
+        <mat-icon>keyboard_double_arrow_left</mat-icon>
       </button>
     </div>
-
     <!-- Menu Items -->
     <div
       class="scrollbar-thumb--sm scrollbar-track-rounded scrollbar-thin scrollbar-track-transparent scrollbar-thumb-card h-full overflow-auto px-4">
@@ -34,9 +34,10 @@
   <div class="mx-4 my-4 space-y-1">
     <!-- Version -->
     <a target="_blank" class="-sm hover:bg-card group flex h-9 cursor-pointer items-center justify-start p-2">
-      <svg-icon
+      <!-- <svg-icon
         src="assets/icons/heroicons/outline/information-circle.svg"
-        [svgClass]="'h-5 w-5 text-text-muted-foreground/50'"></svg-icon>
+        [svgClass]="'h-5 w-5 text-muted-foreground/50'"></svg-icon> -->
+      <mat-icon class="text-[20px] text-muted-foreground/50 flex-shrink-0">info</mat-icon>
 
       <div class="ml-3 truncate text-[10px] font-semibold tracking-wide focus:outline-hidden">
         <span class="bg-primary/10 text-primary px-2 font-semibold">v{{ appJson.version }}</span>

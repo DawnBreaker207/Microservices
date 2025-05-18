@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet, Event } from '@angular/router';
 import { FooterComponent } from './components/layout/footer/footer.component';
-import { NavbarComponent } from './components/layout/navbar/navbar.component';
 import { BottomNavbarComponent } from './components/layout/bottom-navbar/bottom-navbar.component';
 import { SidebarComponent } from './components/layout/sidebar/sidebar.component';
+import { NavbarComponent } from './components/layout/navbar/navbar.component';
 
 @Component({
   selector: 'app-admin',

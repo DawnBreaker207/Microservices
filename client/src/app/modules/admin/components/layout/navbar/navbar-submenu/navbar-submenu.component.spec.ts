@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewProductComponent } from './view.component';
+import { NavbarSubmenuComponent } from './navbar-submenu.component';
 
-describe('ViewComponent', () => {
-  let component: ViewProductComponent;
-  let fixture: ComponentFixture<ViewProductComponent>;
+describe('NavbarSubmenuComponent', () => {
+  let component: NavbarSubmenuComponent;
+  let fixture: ComponentFixture<NavbarSubmenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ViewProductComponent],
+      imports: [NavbarSubmenuComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ViewProductComponent);
+    fixture = TestBed.createComponent(NavbarSubmenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
