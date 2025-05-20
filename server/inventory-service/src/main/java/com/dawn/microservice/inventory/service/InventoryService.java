@@ -1,24 +1,20 @@
 package com.dawn.microservice.inventory.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.dawn.microservice.inventory.repository.InventoryRepository;
+import com.dawn.microservice.inventory.model.Inventory;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+public interface InventoryService {
+    List<Inventory> findAll();
 
-@Service
-@RequiredArgsConstructor
-@Slf4j
-public class InventoryService {
+    Inventory findById(final Long inventoryId);
 
-    private final InventoryRepository inventoryRepository;
+    Inventory save(final Inventory inventory);
 
-    public boolean isInStock(String skuCode, Integer quantity) {
-//	Find an inventory for a given skuCode where quantity >= 0
-	log.info(" Start -- Received request to check stock for skuCode {}, with quantity {}", skuCode, quantity);
-	boolean isInStock = inventoryRepository.existsBySkuCodeAndQuantityIsGreaterThanEqual(skuCode, quantity);
-	log.info(" End -- Product with skuCode {}, and quantity {}, is in stock - {}", skuCode, quantity, isInStock);
-	return isInStock;
-    }
+    Inventory update(final Long inventoryId, final Inventory inventory);
+
+    void deleteById(final Long inventoryId);
+
+    boolean isInStock(String skuCode, Integer quantity);
+
 }

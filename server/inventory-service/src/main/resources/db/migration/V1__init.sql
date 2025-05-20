@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS inventory_service;
+-- CREATE SCHEMA IF NOT EXISTS inventory_service;
 
-CREATE TABLE `t_inventory`
+CREATE TABLE `inventory`
 (
 	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
 	`sku_code` VARCHAR(255) DEFAULT NULL,
