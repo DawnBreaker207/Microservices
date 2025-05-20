@@ -30,7 +30,7 @@ public class Product {
     @Column(name = "product_id", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String sku;
 
     private String name;

@@ -1,5 +1,6 @@
 package com.dawn.microservice.productservice.dto;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -16,11 +17,12 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class CategoryDto implements Serializable {
-  private static final Long serialVersionUID = 1L;
-    
+    @Serial
+    private static final Long serialVersionUID = 1L;
+
     private Long categoryId;
-    private String categoryTitle;
-    
+    private String categoryName;
+
     @JsonInclude(value = Include.NON_NULL)
     private Set<ProductDto> productDtos;
 }

@@ -2,6 +2,7 @@ package com.dawn.microservice.productservice.dto;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -21,10 +22,13 @@ public class ProductDto implements Serializable {
     private static final Long serialVersionUID = 1L;
     
     private Long productId;
-    private String productTitle;
-    private String sku;
-    private Double priceUnit;
-    private Integer quantity;
+    private String productName;
+    private String productSku;
+    private String productDescription;
+    private BigDecimal productPrice;
 
-    private Long categoryId;
+    
+    @JsonProperty("category")
+    @JsonInclude(value = Include.NON_NULL)
+    private CategoryDto categoryDto;
 }
