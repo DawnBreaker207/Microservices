@@ -9,8 +9,10 @@ services:
   mongodb:
     container_name: mongodb
     image: mongo:7.0.5
-    ports:
-      - '27017:27017'
+    # ports:
+    #   - '27017:27017'
+    expose:
+      - 27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -23,8 +25,10 @@ services:
   mysql:
     container_name: mysql
     image: mysql:8.4.5
-    ports:
-      - '3307:3306'
+    # ports:
+    #   - '3307:3306'
+    expose:
+      - 3306
     environment:
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: mysql
@@ -57,10 +61,13 @@ services:
       context: ./server/api-gateway
       dockerfile: Dockerfile
     working_dir: /app
+    # environment:
+    #   - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/realms/spring-microservice-security-realms
     ports:
       - '9000:9000'
     depends_on:
       - discovery-service
+      - keycloak
     networks:
       - micro_net
 
@@ -77,6 +84,8 @@ services:
     restart: always
     ports:
       - '8080:8080'
+    # expose:
+    #   - 8080
     depends_on:
       - discovery-service
       - mysql
@@ -111,8 +120,10 @@ services:
     depends_on:
       - discovery-service
       - mysql
+    networks:
+      - micro_net
 
-  # # Notification Service
+  # Notification Service
   notification-service:
     container_name: notification-service
     image: notification-service:latest
@@ -190,6 +201,8 @@ services:
       MYSQL_DATABASE: keycloak
       MYSQL_USER: keycloak
       MYSQL_PASSWORD: password
+    networks:
+      - micro_net
 
   keycloak:
     container_name: keycloak
@@ -203,6 +216,10 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+
+      KC_PROXY: edge
+      KC_HOSTNAME_STRICT: false
+      KEYCLOAK_FRONTEND_URL: http://localhost:8181
     ports:
       - '8181:8080'
     volumes:
