@@ -33,7 +33,7 @@ export class ViewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loadData();
+    this.loadData();
   }
 
   applyFilter(event: Event) {
